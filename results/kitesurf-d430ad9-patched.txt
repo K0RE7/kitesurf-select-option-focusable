@@ -1,0 +1,28 @@
+# Kitesurf main d430ad9 with 0001-Mark-option-in-a-select-as-focusable-in-the-accessibility-tree.patch: workerd 1.20260911.1 on Linux (Docker), node v22.23.5
+== ax select
+combobox "Sort"                     [focusable]
+option   "Sort by"                  [focusable, selected]
+option   "Price (Low - High)"       [focusable]
+== ax parity
+combobox "plain"                    [focusable]
+option   "enabled"                  [focusable, selected]
+option   "disabled option"          []
+combobox "group"                    [focusable]
+option   "in disabled optgroup"     []
+option   "in enabled optgroup"      [focusable, selected]
+combobox "disabled select"          [disabled]
+option   "in disabled select"       [focusable, selected]
+== snapshot select
+RootWebArea ""
+  combobox "Sort"
+    option "Sort by"
+    option "Price (Low - High)"
+== snapshot parity
+RootWebArea "parity"
+  combobox "plain"
+    option "enabled"
+  combobox "group"
+    option "in enabled optgroup"
+  combobox "disabled select"
+    option "in disabled select"
+  textbox "list"

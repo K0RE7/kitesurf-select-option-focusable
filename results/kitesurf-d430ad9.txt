@@ -1,0 +1,23 @@
+# Kitesurf main d430ad9: workerd 1.20260911.1 on Linux (Docker), node v22.23.5
+== ax select
+combobox "Sort"                     [focusable]
+option   "Sort by"                  [selected]
+option   "Price (Low - High)"       []
+== ax parity
+combobox "plain"                    [focusable]
+option   "enabled"                  [selected]
+option   "disabled option"          []
+combobox "group"                    [focusable]
+option   "in disabled optgroup"     []
+option   "in enabled optgroup"      [selected]
+combobox "disabled select"          [disabled]
+option   "in disabled select"       [selected]
+== snapshot select
+RootWebArea ""
+  combobox "Sort"
+== snapshot parity
+RootWebArea "parity"
+  combobox "plain"
+  combobox "group"
+  combobox "disabled select"
+  textbox "list"

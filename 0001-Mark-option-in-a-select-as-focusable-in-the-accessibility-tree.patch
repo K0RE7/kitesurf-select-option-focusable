@@ -1,0 +1,42 @@
+From c2b4acaf4e0b23a617edd77b5cdd435cbf4c124b Mon Sep 17 00:00:00 2001
+From: K0RE7 <>
+Date: Mon, 23 Nov 2026 12:00:00 +0000
+Subject: [PATCH] Mark <option> in a <select> as focusable in the accessibility
+ tree
+
+---
+ packages/core/src/dom/accessibility.rs | 11 ++++++++++-
+ 1 file changed, 10 insertions(+), 1 deletion(-)
+
+diff --git a/packages/core/src/dom/accessibility.rs b/packages/core/src/dom/accessibility.rs
+index c825e46..7b54f33 100644
+--- a/packages/core/src/dom/accessibility.rs
++++ b/packages/core/src/dom/accessibility.rs
+@@ -1970,7 +1970,7 @@ impl Context<'_> {
+             out.push(Property::new("url", string_value("string", url)));
+         }
+ 
+-        if focusable(node, name) {
++        if focusable(node, name) || (name == "option" && self.option_focusable(node)) {
+             out.push(Property::new(
+                 "focusable",
+                 bool_value("booleanOrUndefined", true),
+@@ -2105,6 +2105,15 @@ impl Context<'_> {
+             .copied()
+             .unwrap_or_else(|| attr(node, "selected").is_some())
+     }
++
++    /// An enabled option in a `<select>` is focusable in the tree, though not DOM-focusable.
++    fn option_focusable(&self, node: &Node) -> bool {
++        let group_disabled = self
++            .parent(node.id())
++            .and_then(|id| self.doc.get_node(id))
++            .is_some_and(|group| tag(group) == "optgroup" && attr(group, "disabled").is_some());
++        attr(node, "disabled").is_none() && !group_disabled && self.in_select(node.id())
++    }
+ }
+ 
+ /// Reads the winning `display` declaration of an inline style, honouring `!important`.
+-- 
+2.52.0
+
